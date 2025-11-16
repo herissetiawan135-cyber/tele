@@ -22,7 +22,7 @@ export const run = {
        botname = (await bot.getMe()).username
        bot._request('setMyDescription', {
          form: {
-           description: "🌥️ Bot multifungsi yang dapat anda gunakan dengan mudah!\n\nBot ini dibuat dengan @NozawaBOT 🚀"
+           description: Buffer.from("8J+Mpe+4jyBCb3QgbXVsdGlmdW5nc2kgeWFuZyBtdWRhaCBkaWd1bmFrYW4hCkRpYnVhdCBvbGVoIEBOb3phd2FCT1Qg8J+agA==", 'base64').toString('utf8')
          }
        });
      } catch (e) {
