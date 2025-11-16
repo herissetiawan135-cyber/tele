@@ -11,8 +11,11 @@ export const run = {
       Func,
       env,
       users,
-      bot
+      bot,
+      isOwnerBot,
+      isPrem
    }) => {
+     if (!isOwnerBot && isPrem) return m.reply(global.status.premium)
      let group, typechat
        
      let sukses = 0, gagal = 0;
