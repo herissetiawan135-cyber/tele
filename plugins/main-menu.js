@@ -31,6 +31,7 @@ export const run = {
       maker: "🖌️",
       owner: "👑",
       search: "🔍",
+      sticker: "🖼️",
       tools: "⚒️",
       user: "👤",
       other: "📂"
