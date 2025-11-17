@@ -6,7 +6,7 @@ export const run = {
    usage: ['quotely'],
    hidden: ['qc'],
    use: 'text',
-   category: 'maker',
+   category: 'sticker',
    async: async (m, {
       conn,
       text,
