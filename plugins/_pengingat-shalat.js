@@ -55,7 +55,7 @@ export const run = {
 
     // Jika ada waktu sholat yang cocok, kirim pesan
     if (wilayahTerpilih && sholatTerpilih) {
-        let caption = `Hei ${await getName(m.sender)}!,\nWaktu *${sholatTerpilih}* telah tiba, ambilah air wudhu dan segeralah shalat.\n\n*${timeNow}*\n_untuk wilayah ${wilayahTerpilih} dan sekitarnya._`;
+        let caption = `Hei ${await getName(m.sender, conn)}!,\nWaktu *${sholatTerpilih}* telah tiba, ambilah air wudhu dan segeralah shalat.\n\n*${timeNow}*\n_untuk wilayah ${wilayahTerpilih} dan sekitarnya._`;
         m.reply(caption)
 
         // Simpan waktu terakhir pesan dikirim

@@ -15,7 +15,7 @@ export const run = {
  users.exp += hasil
  users.lastwork = new Date * 1
 
- const name = await getName(m.sender)
+ const name = await getName(m.sender, conn)
  let { message_id } = await m.reply('Mencari wadah📦')
  
   setTimeout(() => {

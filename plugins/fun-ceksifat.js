@@ -21,7 +21,7 @@ export const run = {
     let h = Math.floor(Math.random() * nm)
     let c = getRandom(['Baik Hati', 'Sombong', 'Pelit', 'Dermawan', 'Rendah Hati', 'Rendah Diri', 'Pemalu', 'Penakut', 'Pengusil', 'Cengeng'])
     let d = getRandom(['Rajin', 'Malas', 'Membantu', 'Ngegosip', 'Jail', 'Gak jelas', 'Shoping', 'Chattan sama Doi', 'Chattan di WA karna Jomblo', 'Sedih', 'Kesepian', 'Bahagia'])
-    const nama = `${text ? text : await getName(m.quoted ? m.quoted.sender : m.sender)}`
+    const nama = `${text ? text : await getName(m.quoted ? m.quoted.sender : m.sender, conn)}`
 
     let msdpn = getRandom([
       `Anda akan menjadi orang yang kaya, keluarga yang harmonis, memiliki ${b} anak, memiliki ${d}, memiliki kendaraan, memiliki rumah`,

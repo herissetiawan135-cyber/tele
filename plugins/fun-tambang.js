@@ -16,7 +16,7 @@ export const run = {
   users.lastwork = new Date * 1
   
   let { message_id } = await m.reply('Mempersiapkan Peralatan⛏️')
-  const name = await getName(m.sender)
+  const name = await getName(m.sender, conn)
   
   setTimeout(() => {
     conn.editMsg(m.chat, message_id, 'Menuju Penambangan👷', donateBtn)

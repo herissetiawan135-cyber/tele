@@ -17,7 +17,7 @@ export const run = {
 
     let { data: src } = await axios.get(`${apiUrl}/tebakmemberjkt48`)
 
-    const nama = `*${text ? text : await getName(m.sender)}*`
+    const nama = `*${text ? text : await getName(m.sender, conn)}*`
     const capt = `Oshi ${nama} Adalah *${src.nama} - ${src.gen}*`
     const query = `${src.nama} JKT48`
 

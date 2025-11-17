@@ -63,9 +63,9 @@ export const run = {
 ${arr.slice(0, 3).join('')}
 ${arr.slice(3, 6).join('')}
 ${arr.slice(6).join('')}
-${isWin ? `${await getName(winner)} Menang! (+${winScore} XP)` : isTie ? `Game berakhir (+${playScore} XP)` : `Giliran ${['❌', '⭕'][1 * room.game._currentTurn]} (${await getName(room.game.currentTurn)})`}
-❌: ${await getName(room.game.playerX)}
-⭕: ${await getName(room.game.playerO)}
+${isWin ? `${await getName(winner, conn)} Menang! (+${winScore} XP)` : isTie ? `Game berakhir (+${playScore} XP)` : `Giliran ${['❌', '⭕'][1 * room.game._currentTurn]} (${await getName(room.game.currentTurn, conn)})`}
+❌: ${await getName(room.game.playerX, conn)}
+⭕: ${await getName(room.game.playerO, conn)}
 Ketik *nyerah* untuk nyerah
 Room ID: ${room.id}
 `.trim()

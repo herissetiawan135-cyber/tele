@@ -24,7 +24,7 @@ export const run = {
   let exp = totalHewan * 100;
   users.exp += exp;
 
-  const name = await getName(m.sender)
+  const name = await getName(m.sender, conn)
   let { message_id } = await m.reply('Mempersiapkan Peralatan🏹')
  
   setTimeout(() => {

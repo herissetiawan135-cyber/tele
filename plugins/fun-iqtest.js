@@ -9,7 +9,7 @@ export const run = {
     env
   }) => {
   let iqValues = ['10%', '20%', '40%', '60%', '80%', '100%', `${pickRandom(global.iq)}%`];
-  let { message_id } = await m.reply(`*${await getName(m.sender)}*, IQ Anda Sebesar : 10%`)
+  let { message_id } = await m.reply(`*${await getName(m.sender, conn)}*, IQ Anda Sebesar : 10%`)
 
   for (let iq of iqValues) {
     await conn.editMsg(m.chat, message_id, `*${await getName(m.sender)}*, IQ Anda Sebesar : ${iq}`, donateBtn, "Markdown")

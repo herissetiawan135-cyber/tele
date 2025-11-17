@@ -28,9 +28,9 @@ export const run = {
     let rankLimit = sortedLim.findIndex(u => u.jid === m.sender) + 1
     let rankExp   = sortedExp.findIndex(u => u.jid === m.sender) + 1
 
-    const limitNames = await Promise.all(sortedLim.slice(0, lenLimit).map(u => getName(u.jid)))
-    const expNames   = await Promise.all(sortedExp.slice(0, lenExp).map(u => getName(u.jid)))
-    const premiumNames = await Promise.all(sortedP.slice(0, lenPrem).map(u => getName(u.jid)))
+    const limitNames = await Promise.all(sortedLim.slice(0, lenLimit).map(u => getName(u.jid, conn)))
+    const expNames   = await Promise.all(sortedExp.slice(0, lenExp).map(u => getName(u.jid, conn)))
+    const premiumNames = await Promise.all(sortedP.slice(0, lenPrem).map(u => getName(u.jid, conn)))
 
     let text = `
 • <b>Limit Leaderboard Top ${lenLimit}</b> •

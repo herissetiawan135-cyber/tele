@@ -23,7 +23,7 @@ export const run = {
            if (db.bot?.[isbot.username]?.owner) {
              botlist += `- Owner: @${db.bot?.[isbot.username]?.owner}\n\n`
            } else if (db.bot?.[isbot.username]?.owner_id) {
-             botlist += `- Owner: ${await getName(db.bot?.[isbot.username]?.owner_id)}\n\n`
+             botlist += `- Owner: ${await getName(db.bot?.[isbot.username]?.owner_id, conn)}\n\n`
            } else {
              botlist += '- Owner: Not Set\n\n'
            }

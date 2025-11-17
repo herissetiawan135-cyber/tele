@@ -42,7 +42,7 @@ Room ID: ${room.id}
 ${arr.slice(0, 3).join('')}
 ${arr.slice(3, 6).join('')}
 ${arr.slice(6).join('')}
-Menunggu ${await getName(room.game.currentTurn)}
+Menunggu ${await getName(room.game.currentTurn, conn)}
 Ketik *nyerah* untuk nyerah
 `.trim()
         if (room.x !== room.o) await conn.reply(room.x, str)

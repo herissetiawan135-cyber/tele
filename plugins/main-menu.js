@@ -31,7 +31,6 @@ export const run = {
       maker: "🖌️",
       owner: "👑",
       search: "🔍",
-      sticker: "🖼️",
       tools: "⚒️",
       user: "👤",
       other: "📂"
@@ -112,7 +111,7 @@ export const run = {
       
       let owner
       if (bot?.owner_id) {
-        owner = await getName(bot?.owner_id);
+        owner = await getName(bot?.owner_id, conn);
       } else if (bot?.owner) {
         owner = `@${bot?.owner}`;
       } else {

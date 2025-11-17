@@ -40,7 +40,7 @@ export const run = {
 
   const cek2 = Math.floor(Math.random() * 100)
 
-  let tag = await getName(who)
+  let tag = await getName(who, conn)
   const nama = `${text ? text : tag}`
   let cap = `*Pertanyaan:* ${command}\n*Nama:* ${nama}\n*Jawaban:* ${cek2}%`
 
