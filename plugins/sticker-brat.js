@@ -5,7 +5,7 @@ export const run = {
    usage: ['brat','bratvid'],
    hidden: ['bratgif","bratv2","brat2'],
    use: 'text',
-   category: 'maker',
+   category: 'sticker',
    async: async (m, {
       conn,
       text,
