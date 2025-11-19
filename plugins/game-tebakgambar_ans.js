@@ -2,16 +2,20 @@ import similarity from 'similarity'
 const threshold = 0.72
 export const run = {
   async: async (m, { conn, Api, body, Func, users, env, isROwner, isPrefix }) => {
-    let id = 'tebakgambar-' + m.chat
+    conn.game = conn.game ? conn.game : {}
     
-    if (m.text == (isPrefix + "hgamb")) {
-      let json = JSON.parse(JSON.stringify(conn.game[id][1]))
-      return conn.reply(m.chat, `<pre><code class="language-Clue">${json.jawaban.replace(/[AIUEOaiueo]/ig, '_')}</code></pre>`, m.msg, "HTML")
+    let id = 'tebakgambar-' + m.chat
+    let json = JSON.parse(JSON.stringify(conn.game[id]?.[1] || {}))
+    
+    if (!json.jawaban) return
+    
+    if (m.text == (isPrefix + "hgamb")) return conn.reply(m.chat, `<pre><code class="language-Clue">${json.jawaban.replace(/[AIUEOaiueo]/ig, '_')}</code></pre>`, m.msg, "HTML")
+
+    if (!m.quoted || !m.text || !/Ketik.*hgamb/i.test(m.quoted.text) || /.*hgamb/i.test(m.text)) {
+        if (similarity(m.text.toLowerCase(), json.jawaban.toLowerCase().trim()) >= threshold) m.reply(`*Reply pertanyaannya untuk menjawab!*`)
+        return !0
     }
     
-    if (!m.quoted || !m.text || !/Ketik.*hgamb/i.test(m.quoted.text) || /.*hgamb/i.test(m.text))
-        return !0
-    conn.game = conn.game ? conn.game : {}
     if (!(id in conn.game))
         return m.reply('Soal itu telah berakhir')
     
@@ -25,7 +29,7 @@ export const run = {
             delete conn.game[id]
             return m.reply('*Yah Menyerah :( !*')
         }
-        let json = JSON.parse(JSON.stringify(conn.game[id][1]))
+
         if (m.text.toLowerCase() == json.jawaban.toLowerCase().trim()) {
             users.exp += env.expgame
             let caption = `🎉 *Kamu Benar!*\n+${env.expgame} Exp\n\n*${json.deskripsi}*`

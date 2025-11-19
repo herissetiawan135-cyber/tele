@@ -2,15 +2,19 @@ import similarity from 'similarity'
 const threshold = 0.72
 export const run = {
   async: async (m, { conn, Api, body, Func, users, env, isROwner, isPrefix }) => {
-    let id = m.chat
-    
-    if (m.text == (isPrefix + "suska")) {
-      let json = JSON.parse(JSON.stringify(conn.susunkata[id][1]))
-      return conn.reply(m.chat, `<pre><code class="language-Clue">${json.jawaban.replace(/[bcdfghjklmnpqrstvwxyz]/ig, '_')}</code></pre>`, m.msg, "HTML")
-    }
-
-    if (!m.quoted || !/Ketik.*suska/i.test(m.quoted.text)) return !0
     conn.susunkata = conn.susunkata ? conn.susunkata : {}
+    
+    let id = m.chat
+    let json = JSON.parse(JSON.stringify(conn.susunkata[id]?.[1] || {}))
+    
+    if (!json.jawaban) return
+    
+    if (m.text == (isPrefix + "suska")) return conn.reply(m.chat, `<pre><code class="language-Clue">${json.jawaban.replace(/[bcdfghjklmnpqrstvwxyz]/ig, '_')}</code></pre>`, m.msg, "HTML")
+
+    if (!m.quoted || !/Ketik.*suska/i.test(m.quoted.text)) {
+      if (similarity(m.text.toLowerCase(), json.jawaban.toLowerCase().trim()) >= threshold) m.reply(`*Reply pertanyaannya untuk menjawab!*`)
+      return !0
+    }
 
     if (!(id in conn.susunkata)) return m.reply('❗Soal itu telah berakhir')
     if (m.quoted.id == conn.susunkata[id][0].message_id) {
@@ -23,7 +27,7 @@ export const run = {
             delete conn.susunkata[id]
             return conn.reply(m.chat, '*Menyerah!*\nSusunkata dihapus🗑️', m.msg)
         }
-        let json = JSON.parse(JSON.stringify(conn.susunkata[id][1]))
+        let json = JSON.parse(JSON.stringify(conn.susunkata[id][1] || {}))
         if (m.text.toLowerCase() == json.jawaban.toLowerCase().trim()) {
             users.exp += env.expgame
             let caption = `🎉 *Kamu Benar!*\n+${env.expgame} Exp`

@@ -2,16 +2,20 @@ import similarity from 'similarity'
 const threshold = 0.72
 export const run = {
   async: async (m, { conn, Api, body, Func, users, env, isROwner, isPrefix }) => {
-    let id = 'tebaklagu-' + m.chat
+    conn.game = conn.game ? conn.game : {}
     
-    if (m.text == (isPrefix + "hlagu")) {
-      let json = JSON.parse(JSON.stringify(conn.game[id][1]))
-      return conn.reply(m.chat, `<pre><code class="language-Clue">${json.judul.replace(/[AIUEOaiueo]/ig, '_')}</code></pre>`, m.msg, "HTML")
+    let id = 'tebaklagu-' + m.chat
+    let json = JSON.parse(JSON.stringify(conn.game[id]?.[1] || {}))
+    
+    if (!json.judul) return
+    
+    if (m.text == (isPrefix + "hlagu")) return conn.reply(m.chat, `<pre><code class="language-Clue">${json.judul.replace(/[AIUEOaiueo]/ig, '_')}</code></pre>`, m.msg, "HTML")
+
+    if (!m.quoted || !m.text || !/Ketik.*hlagu/i.test(m.quoted.text) || /.*hlagu/i.test(m.text)) {
+        if (similarity(m.text.toLowerCase(), json.judul.toLowerCase().trim()) >= threshold) m.reply(`*Reply pertanyaannya untuk menjawab!*`)
+        return !0
     }
     
-    if (!m.quoted || !m.text || !/Ketik.*hlagu/i.test(m.quoted.text) || /.*hlagu/i.test(m.text))
-        return !0
-    conn.game = conn.game ? conn.game : {}
     if (!(id in conn.game))
         return m.reply('Soal itu telah berakhir')
     if (m.quoted.id == conn.game[id][0].message_id) {
@@ -24,7 +28,7 @@ export const run = {
             delete conn.game[id]
             return m.reply('*Yah Menyerah :( !*')
         }
-        let json = JSON.parse(JSON.stringify(conn.game[id][1]))
+
         if (m.text.toLowerCase() == json.judul.toLowerCase().trim()) {
             users.exp += conn.game[id][2]
             await conn.reply(m.chat, 'Kamu Benar ✅', m.msg, "Markdown", [[{ text: 'Mainkan Lagi🎮', callback_data: '.tlagujkt' }]])

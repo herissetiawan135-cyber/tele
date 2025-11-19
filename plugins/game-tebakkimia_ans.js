@@ -3,17 +3,20 @@ const threshold = 0.72
 
 export const run = {
   async: async (m, { conn, Api, body, Func, users, env, isROwner, isPrefix }) => {
-    let id = m.chat
-
-    if (m.text == (isPrefix + "hkim")) {
-      let json = JSON.parse(JSON.stringify(conn.tebakkimia[id][1]))
-      return conn.reply(m.chat, `<pre><code class="language-Clue">${json.lambang.replace(/[AIUEOaiueo]/ig, '_')}</code></pre>`, m.msg, "HTML")
-    }
-    
-    if (!m.quoted || !m.text || !/Ketik.*hkim/i.test(m.quoted.text) || /.*hkim/i.test(m.text))
-        return !0
-
     conn.tebakkimia = conn.tebakkimia ? conn.tebakkimia : {}
+    
+    let id = m.chat
+    let json = JSON.parse(JSON.stringify(conn.tebakkimia[id]?.[1] || {}))
+    
+    if (!json.lambang) return
+    
+    if (m.text == (isPrefix + "hkim")) return conn.reply(m.chat, `<pre><code class="language-Clue">${json.lambang.replace(/[AIUEOaiueo]/ig, '_')}</code></pre>`, m.msg, "HTML")
+
+    if (!m.quoted || !m.text || !/Ketik.*hkim/i.test(m.quoted.text) || /.*hkim/i.test(m.text)) {
+        if (similarity(m.text.toLowerCase(), json.lambang.toLowerCase().trim()) >= threshold) m.reply(`*Reply pertanyaannya untuk menjawab!*`)
+        return !0
+    }
+
     if (!(id in conn.tebakkimia))
         return conn.reply(m.chat, 'Soal itu telah berakhir', m.msg)
 
@@ -27,7 +30,7 @@ export const run = {
             delete conn.tebakkimia[id]
             return conn.reply(m.chat, '*Yah Menyerah :( !*', m.msg)
         }
-        let json = JSON.parse(JSON.stringify(conn.tebakkimia[id][1]))
+
         if (m.text.toLowerCase() == json.lambang.toLowerCase().trim()) {
             users.exp += env.expgame
             let caption = `🎉 *Kamu Benar!*\n+${env.expgame} Exp`

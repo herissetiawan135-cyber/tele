@@ -3,17 +3,20 @@ const threshold = 0.72
 
 export const run = {
   async: async (m, { conn, Api, body, Func, users, env, isROwner, isPrefix }) => {
+    conn.tebaktebakan = conn.tebaktebakan ? conn.tebaktebakan : {}
+    
     let id = m.chat
-
-    if (m.text == (isPrefix + "hteb")) {
-      let json = JSON.parse(JSON.stringify(conn.tebaktebakan[id][1]))
-      return conn.reply(m.chat, `<pre><code class="language-Clue">${json.jawaban.replace(/[AIUEOaiueo]/ig, '_')}</code></pre>`, m.msg, "HTML")
+    let json = JSON.parse(JSON.stringify(conn.tebaktebakan[id]?.[1] || {}))
+    
+    if (!json.jawaban) return
+    
+    if (m.text == (isPrefix + "hteb")) return conn.reply(m.chat, `<pre><code class="language-Clue">${json.jawaban.replace(/[AIUEOaiueo]/ig, '_')}</code></pre>`, m.msg, "HTML")
+    
+    if (!m.quoted || !m.text || !/Ketik.*hteb/i.test(m.quoted.text) || /.*hteb/i.test(m.text)) {
+        if (similarity(m.text.toLowerCase(), json.jawaban.toLowerCase().trim()) >= threshold) m.reply(`*Reply pertanyaannya untuk menjawab!*`)
+        return !0
     }
     
-    if (!m.quoted || !m.text || !/Ketik.*hteb/i.test(m.quoted.text) || /.*hteb/i.test(m.text))
-        return !0
-    conn.tebaktebakan = conn.tebaktebakan ? conn.tebaktebakan : {}
-
     if (!(id in conn.tebaktebakan))
         return conn.reply(m.chat, 'Soal itu telah berakhir', m)
 
@@ -28,7 +31,6 @@ export const run = {
             return conn.reply(m.chat, '*Yah Menyerah :( !*', m)
         }
 
-        let json = JSON.parse(JSON.stringify(conn.tebaktebakan[id][1]))
         if (m.text.toLowerCase() == json.jawaban.toLowerCase().trim()) {
             users.exp += env.expgame
             let caption = `🎉 *Kamu Benar!*\n+${env.expgame} Exp`

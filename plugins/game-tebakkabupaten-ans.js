@@ -3,17 +3,20 @@ import similarity from 'similarity'
 const threshold = 0.72
 export const run = {
   async: async (m, { conn, Api, body, Func, users, env, isROwner, isPrefix }) => {
-    let id = m.chat
-    
-    if (m.text == (isPrefix + "hkab")) {
-      let json = JSON.parse(JSON.stringify(conn.tebakkabupaten[id][1]))
-      return conn.reply(m.chat, `<pre><code class="language-Clue">${json.title.replace(/[AIUEOaiueo]/ig, '_')}</code></pre>`, m.msg, "HTML")
-    }
-
-    if (!m.quoted || !m.text || !/Ketik.*hkab/i.test(m.quoted.text) || /.*hkab/i.test(m.text))
-        return !0
     conn.tebakkabupaten = conn.tebakkabupaten ? conn.tebakkabupaten : {}
+    
+    let id = m.chat
+    let json = JSON.parse(JSON.stringify(conn.tebakkabupaten[id]?.[1] || {}))
+    
+    if (!json.title) return
+    
+    if (m.text == (isPrefix + "hkab")) return conn.reply(m.chat, `<pre><code class="language-Clue">${json.title.replace(/[AIUEOaiueo]/ig, '_')}</code></pre>`, m.msg, "HTML")
 
+    if (!m.quoted || !m.text || !/Ketik.*hkab/i.test(m.quoted.text) || /.*hkab/i.test(m.text)) {
+        if (similarity(m.text.toLowerCase(), json.title.toLowerCase().trim()) >= threshold) m.reply(`*Reply pertanyaannya untuk menjawab!*`)
+        return !0
+    }
+    
     if (!(id in conn.tebakkabupaten))
         return conn.reply(m.chat, 'Soal itu telah berakhir', m.msg)
 
@@ -28,7 +31,6 @@ export const run = {
             return conn.reply(m.chat, '*Yah Menyerah :( !*', m.msg)
         }
 
-        let json = JSON.parse(JSON.stringify(conn.tebakkabupaten[id][1]))
         if (m.text.toLowerCase() == json.title.toLowerCase().trim()) {
             users.exp += env.expgame
             let caption = `🎉 *Kamu Benar!*\n_+${env.expgame} Exp_`

@@ -3,16 +3,20 @@ import similarity from 'similarity'
 const threshold = 0.72
 export const run = {
   async: async (m, { conn, Api, body, Func, users, env, isROwner, isPrefix }) => {
-    let id = m.chat
+    conn.caklontong = conn.caklontong ? conn.caklontong : {}
     
-    if (m.text == (isPrefix + "calo")) {
-      let json = JSON.parse(JSON.stringify(conn.caklontong[id][1]))
-      return conn.reply(m.chat, `<pre><code class="language-Clue">${json.jawaban.replace(/[AIUEOaiueo]/ig, '_')}</code></pre>`, m.msg, "HTML")
+    let id = m.chat
+    let json = JSON.parse(JSON.stringify(conn.caklontong[id]?.[1] || {}))
+    
+    if (!json.jawaban) return
+    
+    if (m.text == (isPrefix + "calo")) return conn.reply(m.chat, `<pre><code class="language-Clue">${json.jawaban.replace(/[AIUEOaiueo]/ig, '_')}</code></pre>`, m.msg, "HTML")
+
+    if (!m.quoted || !m.text || !/Ketik.*calo/i.test(m.quoted.text) || /.*(calo|bantuan)/i.test(m.text)) {
+      if (similarity(m.text.toLowerCase(), json.jawaban.toLowerCase().trim()) >= threshold) m.reply(`*Reply pertanyaannya untuk menjawab!*`)
+      return !0
     }
     
-    if (!m.quoted || !m.text || !/Ketik.*calo/i.test(m.quoted.text) || /.*(calo|bantuan)/i.test(m.text))
-        return !0
-    conn.caklontong = conn.caklontong ? conn.caklontong : {}
     if (!(id in conn.caklontong))
         return m.reply('❗Soal itu telah berakhir')
     if (m.quoted.id == conn.caklontong[id][0].message_id) {
@@ -25,7 +29,6 @@ export const run = {
             delete conn.game[id]
             return m.reply('*Yah Menyerah :( !*')
         }
-        let json = JSON.parse(JSON.stringify(conn.caklontong[id][1]))
         if (m.text.toLowerCase() == json.jawaban.toLowerCase().trim()) {
             users.exp += env.expgame
             let caption = `🎉 *Kamu Benar!*\n+${env.expgame} Exp`

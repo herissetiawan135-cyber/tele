@@ -2,15 +2,20 @@ import similarity from 'similarity'
 const threshold = 0.72
 export const run = {
   async: async (m, { conn, Api, body, Func, users, env, isROwner, isPrefix }) => {
-    let id = m.chat
+    conn.tebakoshi = conn.tebakoshi ? conn.tebakoshi : {}
     
-    if (m.text == (isPrefix + "hoshi")) {
-      let oshi = JSON.parse(JSON.stringify(conn.tebakoshi[id][1]))
-      return conn.reply(m.chat, `<pre><code class="language-Clue">${oshi.replace(/[AIUEOaiueo]/ig, '_')}</code></pre>`, m.msg, "HTML")
+    let id = m.chat
+    let oshi = JSON.parse(JSON.stringify(conn.tebakoshi[id]?.[1] || {}))
+    
+    if (!conn.tebakoshi[id]?.[1]) return
+    
+    if (m.text == (isPrefix + "hoshi")) return conn.reply(m.chat, `<pre><code class="language-Clue">${oshi.replace(/[AIUEOaiueo]/ig, '_')}</code></pre>`, m.msg, "HTML")
+
+    if (!m.quoted || !m.text || !/Ketik.*hoshi/i.test(m.quoted.text) || /.*hoshi/i.test(m.text)) {
+      if (similarity(m.text.toLowerCase(), oshi.toLowerCase().trim()) >= threshold) m.reply(`*Reply pertanyaannya untuk menjawab!*`)
+      return !0
     }
     
-    if (!m.quoted || !m.text || !/Ketik.*hoshi/i.test(m.quoted.text) || /.*hoshi/i.test(m.text)) return !0
-    conn.tebakoshi = conn.tebakoshi ? conn.tebakoshi : {}
     if (!(id in conn.tebakoshi))
         return conn.reply(m.chat, 'Soal itu telah berakhir', m)
     if (m.quoted.id == conn.tebakoshi[id][0].message_id) {
@@ -23,7 +28,7 @@ export const run = {
             delete conn.tebakoshi[id]
             return conn.reply(m.chat, '*Yah Menyerah :( !*', m)
         }
-        let oshi = JSON.parse(JSON.stringify(conn.tebakoshi[id][1]))
+
         if (m.text.toLowerCase() == oshi.toLowerCase().trim()) {
             users.exp += env.expgame
             let caption = `🎉 *Kamu Benar!*\n+${env.expgame} Exp`
