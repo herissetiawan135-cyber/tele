@@ -84,7 +84,7 @@ export const run = {
        
        const previewUrl = `https://${sitename}.vercel.app`;
        
-       const up = await upload(fs.readFileSync(filepath), "smail.my.id/cloud")
+       const up = await upload(fs.readFileSync(filepath), `${apiName}/cloud`)
        
        fs.unlinkSync(filepath);
        await m.reply(`✅ Sukses deploy!\n🌍 URL: ${up.link}\n${previewUrl}`);

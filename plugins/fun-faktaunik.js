@@ -14,7 +14,7 @@ export const run = {
     conn.sendChatAction(m.chat, "typing")
     try {
       var json = await (await fetch(`https://nekos.life/api/v2/fact`)).json()
-      let { text: result } = (await axios.get(`https://smail.my.id/translate?text=${json.fact}`)).data
+      let { text: result } = (await axios.get(`${apiUrl}/translate?text=${json.fact}`)).data
       m.reply(result)
     } catch (err) {
       m.reply('Gagal mendapatkan data')
