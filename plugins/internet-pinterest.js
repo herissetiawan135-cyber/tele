@@ -23,7 +23,7 @@ export const run = {
          let image = await pinterest(text);
          image = image[~~(Math.random() * (image.length))].image
          
-         await conn.sendButton(m.chat, donateBtn, image, 'pinterest.jpg', `*Result For:* \`${text}\``, m.msg, env.wm);
+         await conn.sendButton(m.chat, [{text: "🔍Cari Lagi", callback_data: `${isPrefix+command} ${text}`}], image, 'pinterest.jpg', `*Result For:* \`${text}\``, m.msg, env.wm);
       } catch (e) {
          conn.reply(m.chat, Func.jsonFormat(e), m.msg)
       }
