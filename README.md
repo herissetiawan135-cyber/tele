@@ -8,7 +8,7 @@
 - **Enkripsi standar main.js & handler.js**
 - ***Beli key hubungi [@RayhanXD](https://t.me/RayhanXD)***
 - ***Free Update & Request Fitur***
-- 25K Permanen
+- ***25K Permanen***
 
 ## ✨ Fitur Utama
 
