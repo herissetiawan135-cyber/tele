@@ -1,5 +1,6 @@
 export const run = {
-  usage: ['tambang'],
+  usage: ['nambang'],
+  hidden: ['tambang'],
   category: 'fun',
   async: async (m, {
     conn,
@@ -14,6 +15,10 @@ export const run = {
   if (new Date - users.lastwork < 60000) return m.reply(`⏳ _Tunggu_ *${msToTime(time - new Date())}* _untuk kembali ke tambang_`)
   users.exp += hasil
   users.lastwork = new Date * 1
+  
+  setTimeout(() => {
+      m.reply(`Waktu istirahat selesai saatnya /${command} ⛏️`)
+  }, 60000);
   
   let { message_id } = await m.reply('Mempersiapkan Peralatan⛏️')
   const name = await getName(m.sender, conn)

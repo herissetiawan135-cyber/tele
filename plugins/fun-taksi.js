@@ -13,6 +13,10 @@ export const run = {
   let time = users.lastwork + 60000
   if (new Date - users.lastwork < 60000) return m.reply(`️😴 *Kamu cape* harus nunggu *${msToTime(time - new Date())}* biar bisa jadi supir taksi`)
 
+  setTimeout(() => {
+      m.reply(`Waktu istirahat selesai saatnya narik /${command} 🚖`)
+  }, 60000);
+  
  users.exp += hasil
  users.lastwork = new Date * 1
  let { message_id } = await m.reply('🔍Mencari penumpang.....')

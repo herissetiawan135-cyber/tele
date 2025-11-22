@@ -13,6 +13,10 @@ export const run = {
   let time = users.lastwork + 60000
   if (new Date - users.lastwork < 60000) return m.reply(`️😴 *Kamu cape* harus nunggu *${msToTime(time - new Date())}* biar bisa nerbangkan roket🚀`)
 
+  setTimeout(() => {
+      m.reply(`Waktu istirahat selesai saatnya menerbangkan /${command} 🚀`)
+  }, 60000);
+  
  users.exp += hasil
  users.lastwork = new Date * 1
  const name = await getName(m.sender, conn)

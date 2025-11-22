@@ -15,6 +15,10 @@ export const run = {
  users.exp += hasil
  users.lastwork = new Date * 1
 
+  setTimeout(() => {
+      m.reply(`Waktu istirahat selesai saatnya /${command} 📦`)
+  }, 60000);
+  
  const name = await getName(m.sender, conn)
  let { message_id } = await m.reply('Mencari wadah📦')
  

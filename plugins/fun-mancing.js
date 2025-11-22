@@ -1,5 +1,6 @@
 export const run = {
   usage: ['mancing'],
+  hidden: ['pancing'],
   category: 'fun',
   async: async (m, {
     conn,
@@ -11,7 +12,11 @@ export const run = {
   }) => {
   let time = users.lastwork + 60000;
   if (new Date() - users.lastwork < 60000) return m.reply(`😴 *Kamu cape* harus nunggu *${msToTime(time - new Date())}* biar bisa mancing🎣`);
-
+  
+  setTimeout(() => {
+      m.reply(`Waktu istirahat selesai saatnya /${command} 🎣`)
+  }, 60000);
+  
   let ikan = {
     '🦀 Kepiting': 0, '🦞 Lobster': 0, '🦐 Udang': 0, '🦑 Cumi': 0, '🐙 Gurita': 0, '🐡 Buntal': 0,
     '🐠 Dory': 0, '🐳 Orca': 0, '🐬 Lumba-lumba': 0, '🐋 Paus': 0, '🦈 Hiu': 0

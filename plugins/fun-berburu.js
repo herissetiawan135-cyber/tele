@@ -12,6 +12,10 @@ export const run = {
   let time = users.lastwork + 60000;
   if (new Date() - users.lastwork < 60000) return m.reply(`😴 *Kamu cape* harus nunggu *${msToTime(time - new Date())}* biar bisa berburu🏹`);
 
+  setTimeout(() => {
+      m.reply(`Waktu istirahat selesai saatnya /${command} 🏹`)
+  }, 60000);
+  
   let hewan = {
     '🐂 Banteng': 0, '🐅 Harimau': 0, '🐘 Gajah': 0, '🐐 Kambing': 0, '🐼 Panda': 0,
     '🐃 Kerbau': 0, '🐮 Sapi': 0, '🐒 Monyet': 0, '🐗 Babi Hutan': 0, '🐖 Babi': 0, '🐓 Ayam': 0
