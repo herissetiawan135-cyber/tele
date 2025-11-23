@@ -23,7 +23,6 @@ export const run = {
      const { message_id } = await m.reply("🤔");
      
      try {
-      let lmn = await luminai(m.text, m.sender.toString(), prompt)
       const { data } = await axios.get(`${apiUrl}/shani?text=${text}`)
       await conn.editMsg(m.chat, data.reply, lmn, button, "Markdown")
      } catch (e) {
