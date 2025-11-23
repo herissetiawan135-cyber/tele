@@ -9,7 +9,7 @@ export const run = {
     users,
     env
   }) => {
-  let hasil = Math.floor(Math.random() * 2000)
+  let hasil = Math.floor(Math.random() * 5000)
   let time = users.lastwork + 60000
   if (new Date - users.lastwork < 60000) return m.reply(`️😴 *Kamu cape* harus nunggu *${msToTime(time - new Date())}* biar bisa jadi supir taksi`)
  users.exp += hasil
