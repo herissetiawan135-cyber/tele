@@ -15,7 +15,7 @@ export const run = {
      if (!m.quoted) return m.reply("Reply pesan member yang mau di kick!")
      
      try {
-       await conn.ban_chat_member(m.chat, m.quoted.sender)
+       await conn.banChatMember(m.chat, m.quoted.sender)
        m.reply("Berhasil kick member!")
      } catch (e) {
        m.reply(`Gagal kick member: ${e.message}`)
