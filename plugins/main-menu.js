@@ -51,9 +51,8 @@ export const run = {
       for (let name in cmd) {
         let obj = cmd[name].run;
         if (!obj || !obj.category) continue;
-        let key = obj.category.toLowerCase();
-        if (!category[key]) category[key] = [];
-        category[key].push(obj);
+        if (!category[obj.category]) category[obj.category] = [];
+        category[obj.category].push(obj);
       }
 
       const me = await conn.getMe();
@@ -116,7 +115,7 @@ export const run = {
       } else if (bot?.owner) {
         owner = `@${bot?.owner}`;
       } else {
-        owner = `Not Set`;
+        owner = env.owner
       }
       
       print += `<blockquote>乂 <code>Owner:</code> ${owner}</blockquote>\n`
@@ -181,8 +180,8 @@ export const run = {
 
     
 async function jkt48Sound() {
-  let { data } = await axios.get(`${apiUrl}/randomlagujkt48?type=json`)
-  return data
+  let { data: json } = await axios.get(`${apiUrl}/tebaklagujkt48`)
+  return json
 }
 
 function clockString(ms) {
