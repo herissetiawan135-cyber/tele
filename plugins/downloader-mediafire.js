@@ -24,11 +24,14 @@ export const run = {
   
   if (!url.match(/https/gi)) return m.reply(`⚠️ Masukkan url mediafire!`)
   if (!url.match(/mediaf/gi)) return m.reply(`❎ Url yang anda masukkan bukan berasal dari mediafire`)
-
+  
+  let download
   try {
     let { data } = await axios.get(`https://api.nekolabs.web.id/downloader/mediafire?url=${url}`)
+    download = data.result.download_url
     await conn.sendButton(m.chat, donateBtn, data.result.download_url, data.result.filename, '`MediaFire DL | NekoLabs`\n\n' + `${data.result.filename}\n${data.result.filesize}\n\n${env.wm}`, m.msg, env.wm);
     } catch (e) {
+      conn.reply(m.chat, download, m.msg, "HTML")
       return m.reply('Terjadi kesalahan, periksa kembali url kamu\n\n' + e.message)
     }
    },
