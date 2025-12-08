@@ -6,7 +6,7 @@
 
 ### Script ini berbayar (5K PerBulan, 25K Permanen)
 - ***Free Update & Request Fitur (No 18+)***
-- ***Backup database & bot token otomatis terkirim ke owner***
+- ***Backup script otomatis terkirim ke owner, file/folder yang kamu ubah tidak akan hilang***
 - ***Enkripsi standar main.js & handler.js***
 - ***Beli key hubungi [@RayhanXD](https://t.me/RayhanXD)***
 - **Trial Key:** ```jiwarudays```
