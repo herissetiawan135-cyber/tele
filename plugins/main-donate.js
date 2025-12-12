@@ -12,11 +12,12 @@ export const run = {
       Func,
       Scraper
    }) => {
-     let caption = 'Haii👋 Terimakasih jika kamu mau berdonasi, untuk donasi scan qris di atas bisa menggunakan semua metode pembayaran yang mendukang qris, 1 perak darimu sangat berharga\n\n' + env.wm
+     let caption = `Haii ${await getName(m.sender, conn)}👋\n\nTerimakasih jika kamu mau berdonasi, untuk donasi scan qris di atas bisa menggunakan semua metode pembayaran yang mendukang qris`
      try {
-       await conn.sendFile(m.chat, 'https://files.catbox.moe/znkpet.jpg', 'cover.jpg', caption, m.msg);
+       await conn.sendPhoto(m.chat, 'https://cdn.videy.co/jNyW4oiC1.mp4', { caption: caption, reply_to_message_id: m.id });
      } catch (e) {
        m.reply("Gagal mengambil gambar!")
      }
-   }
+   },
+   cooldown: true
 }
