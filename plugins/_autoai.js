@@ -23,7 +23,7 @@ export const run = {
      const { message_id } = await m.reply("🤔");
      
      try {
-      const { data } = await axios.get(`${apiUrl}/shani?text=${text}`)
+      const { data } = await axios.get(`${apiUrl}/shani?text=${m.text}`)
       await conn.editMsg(m.chat, data.reply, lmn, button, "Markdown")
      } catch (e) {
        m.reply(e.message);
