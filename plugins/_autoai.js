@@ -24,7 +24,7 @@ export const run = {
      
      try {
       const { data } = await axios.get(`${apiUrl}/shani?text=${m.text}`)
-      await conn.editMsg(m.chat, data.reply, lmn, button, "Markdown")
+      await conn.editMsg(m.chat, message_id, data.reply, button, "Markdown")
      } catch (e) {
        m.reply(e.message);
      }
